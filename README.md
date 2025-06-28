@@ -25,6 +25,8 @@ docker pull ghcr.io/slackr31337/wyoming-piper-gpu:latest
 > PIPER_SILENCE="0.8"
 >
 > LOG_LEVEL="debug" # For debug logging
+>
+> STREAMING=false # To disable streaming
 
 
 # Docker compose

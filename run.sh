@@ -5,6 +5,12 @@ if [[ "${LOG_LEVEL}" == "debug" ]]; then
     LOGGING="--debug "
 fi
 
+STREAMING="${STREAMING:-true}"
+STREAMING_FLAG=""
+if [[ "$STREAMING" == "true" ]]; then
+    STREAMING_FLAG="--streaming "
+fi
+
 # Run wyoming-piper server
 /app/bin/python3 -m wyoming_piper \
     --piper '/app/piper/piper' \
@@ -18,4 +24,4 @@ fi
     --max-piper-procs "${PIPER_PROCS:-1}" \
     --data-dir "${DATA_DIR:-/data}" \
     --download-dir "${DOWNLOAD_DIR:-/data}"  \
-    --use-cuda ${LOGGING}"$@"
+    --use-cuda ${LOGGING}${STREAMING_FLAG}"$@"
