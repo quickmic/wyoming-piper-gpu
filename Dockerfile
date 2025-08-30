@@ -79,7 +79,7 @@ RUN mkdir -p /app/piper && \
 RUN \
     wget -q https://github.com/microsoft/onnxruntime/releases/download/v1.22.0/onnxruntime-linux-x64-gpu-1.22.0.tgz -O - | \
     tar -zxvf - -C /tmp/ &&\
-    cp /tmp/onnxruntime-linux-x64-gpu-1.22.0/lib/* /app/lib/
+    cp -r /tmp/onnxruntime-linux-x64-gpu-1.22.0/lib/* /app/lib/
 
 RUN \
     cd /app/lib/python3.12/site-packages/wyoming_piper/; \
