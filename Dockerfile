@@ -1,5 +1,5 @@
 ##########################################
-FROM nvidia/cuda:11.8.0-cudnn8-runtime-ubuntu22.04 AS build
+FROM nvidia/cuda:13.0.0-base-ubuntu24.04 AS build
 
 ARG TARGETARCH=linux_x86_64
 ARG WYOMING_PIPER_VERSION="1.6.3"
@@ -77,19 +77,19 @@ RUN mkdir -p /app/piper && \
     cp -rf /work/install/* /app/piper/
 
 RUN \
-    wget -q https://github.com/microsoft/onnxruntime/releases/download/v1.14.1/onnxruntime-linux-x64-gpu-1.14.1.tgz -O - | \
+    wget -q https://github.com/microsoft/onnxruntime/releases/download/v1.22.2/onnxruntime-linux-x64-gpu-1.22.2.tgz -O - | \
     tar -zxvf - -C /tmp/ &&\
     cp /tmp/onnxruntime-linux-x64-gpu-1.14.1/lib/* /app/lib/
 
 RUN \
-    cd /app/lib/python3.10/site-packages/wyoming_piper/; \
+    cd /app/lib/python3.12/site-packages/wyoming_piper/; \
     for file in /tmp/wyoming_piper*.diff;do patch -p0 --forward < $file;done;
 
 ##########################################
-FROM nvidia/cuda:11.8.0-cudnn8-runtime-ubuntu22.04 AS dist
+FROM nvidia/cuda:13.0.0-cudnn-runtime-ubuntu24.04 AS dist
 
 ENV PYTHONUNBUFFERED=1
-ENV LD_LIBRARY_PATH="/app/lib:/usr/local/cuda-11.8/targets/x86_64-linux/lib:${LD_LIBRARY_PATH}"
+ENV LD_LIBRARY_PATH="/app/lib:/usr/local/cuda-13.0/targets/x86_64-linux/lib:${LD_LIBRARY_PATH}"
 ENV PATH="/app/bin:${PATH}" 
 
 RUN \
