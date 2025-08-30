@@ -1,5 +1,5 @@
 ##########################################
-FROM nvidia/cuda:13.0.0-base-ubuntu24.04 AS build
+FROM docker.io/nvidia/cuda:13.0.0-base-ubuntu24.04 AS build
 
 ARG TARGETARCH=linux_x86_64
 ARG WYOMING_PIPER_VERSION="1.6.3"
@@ -86,7 +86,7 @@ RUN \
     for file in /tmp/wyoming_piper*.diff;do patch -p0 --forward < $file;done;
 
 ##########################################
-FROM nvidia/cuda:13.0.0-cudnn-runtime-ubuntu24.04 AS dist
+FROM docker.io/nvidia/cuda:13.0.0-cudnn-runtime-ubuntu24.04 AS dist
 
 ENV PYTHONUNBUFFERED=1
 ENV LD_LIBRARY_PATH="/app/lib:/usr/local/cuda-13.0/targets/x86_64-linux/lib:${LD_LIBRARY_PATH}"
